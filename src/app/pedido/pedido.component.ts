@@ -77,7 +77,7 @@ export class PedidoComponent implements OnInit {
   cadastrar(): void {
     if (this.form.valid) {
       const idFarmaceutico = this.form.controls['idFarmaceutico'].value;
-      const idCliente = this.form.controls['idProduto'].value;
+      const idCliente = this.form.controls['idCliente'].value;
       this.pedidoService.cadastrar(idFarmaceutico, idCliente).subscribe(() => {
         this.consultarPedidos();
         this.resetForm();

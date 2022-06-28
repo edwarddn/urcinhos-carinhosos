@@ -48,20 +48,23 @@
       </td>
     </tr>
   </table>
-
-  <form
-    *ngIf="formAddProduto.controls['idPedido'].value"
-    class="form-box modal"
-    [formGroup]="formAddProduto"
-    (ngSubmit)="addProduto()"
-  >
-    <p>Adicionar itens ao pedido</p>
-    <select formControlName="idProduto">
-      <option value="">Selecione um Produto</option>
-      <option *ngFor="let item of produtos" value="{{ item.id }}">
-        {{ item.nome }}
-      </option>
-    </select>
-    <button type="submit" [disabled]="!formAddProduto.valid">Adicionar</button>
-  </form>
+  <div class="modal" *ngIf="formAddProduto.controls['idPedido'].value">
+    <form
+      class="form-box"
+      [formGroup]="formAddProduto"
+      (ngSubmit)="addProduto()"
+    >
+      <p>Adicionar itens ao pedido</p>
+      <select formControlName="idProduto">
+        <option value="">Selecione um Produto</option>
+        <option *ngFor="let item of produtos" value="{{ item.id }}">
+          {{ item.nome }}
+        </option>
+      </select>
+      <button type="submit" [disabled]="!formAddProduto.valid">
+        Adicionar
+      </button>
+    </form>
+    <div class="fundo"></div>
+  </div>
 </div>
