@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -9,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import { Cliente } from '../domain/cliente';
 import { ClienteModel } from '../model/cliente-model';
+import { ClienteService } from '../service/cliente.service';
 
 @Component({
   selector: 'app-cliente',
@@ -26,14 +26,17 @@ export class ClienteComponent implements OnInit {
     aniver: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private clienteService: ClienteService
+  ) {}
 
   ngOnInit(): void {
     this.carregarTabela();
   }
 
-  private carregarTabela() {
-    this.get().subscribe((domains: Cliente[]) => {
+  private carregarTabela(): void {
+    this.clienteService.consultar().subscribe((domains: Cliente[]) => {
       if (domains) {
         this.list = domains;
       }
@@ -44,14 +47,14 @@ export class ClienteComponent implements OnInit {
     const id = this.form.controls['id'].value;
     const cliente: ClienteModel = this.form.getRawValue();
     if (id) {
-      this.put(id, cliente).subscribe((domain: Cliente) => {
+      this.clienteService.alterar(id, cliente).subscribe((domain: Cliente) => {
         if (domain.id) {
           this.carregarTabela();
           this.form.reset();
         }
       });
     } else {
-      this.post(cliente).subscribe((domain: Cliente) => {
+      this.clienteService.cadastrar(cliente).subscribe((domain: Cliente) => {
         if (domain.id) {
           this.list.push(domain);
           this.form.reset();
@@ -68,18 +71,11 @@ export class ClienteComponent implements OnInit {
     this.form.controls['email'].setValue(cliente.email);
   }
 
-  private post(model: ClienteModel): Observable<Cliente> {
-    const url = 'http://localhost:8080/cliente/cadastrar';
-    return this.http.post<Cliente>(url, model);
-  }
-
-  private put(id: string, model: ClienteModel): Observable<Cliente> {
-    const url = 'http://localhost:8080/cliente/alterar/' + id;
-    return this.http.put<Cliente>(url, model);
-  }
-
-  private get(): Observable<Cliente[]> {
-    const url = 'http://localhost:8080/cliente/consultar';
-    return this.http.get<Cliente[]>(url);
+  apagar(cliente: Cliente): void {
+    this.clienteService.remover(cliente.id).subscribe((d: Cliente) => {
+      if (d.id) {
+        this.carregarTabela();
+      }
+    });
   }
 }

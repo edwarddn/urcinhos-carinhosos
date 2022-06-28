@@ -1,0 +1,48 @@
+<div class="box">
+  <p>Pedidos</p>
+  <form class="form-box" [formGroup]="form" (ngSubmit)="cadastrar()">
+    <select formControlName="idFarmaceutico">
+      <option value="">Selecione um Farmacêutico</option>
+      <option *ngFor="let item of farmaceuticos" value="{{ item.id }}">
+        {{ item.nome }}
+      </option>
+    </select>
+    <select formControlName="idCliente">
+      <option value="">Selecione um Cliente</option>
+      <ng-template ngFor let-item [ngForOf]="clientes">
+        <option value="{{ item.id }}">
+          {{ item.nome }}
+        </option>
+      </ng-template>
+    </select>
+    <button type="submit" [disabled]="!form.valid">Cadastrar</button>
+  </form>
+  <hr />
+  <table class="tabelinha">
+    <tr>
+      <th>Cliente</th>
+      <th>Farmaceutico</th>
+      <th>Status</th>
+      <th>Data</th>
+      <th>Pagamento</th>
+      <th>Pago</th>
+      <th>Troco</th>
+      <th>Valor</th>
+      <th>Ações</th>
+    </tr>
+    <tr *ngFor="let pedido of pedidos">
+      <td>{{ pedido.cliente.nome }}</td>
+      <td>{{ pedido.farmaceutico.nome }}</td>
+      <td>{{ pedido.status }}</td>
+      <td>{{ pedido.dataEmissao | date: "dd/MM/yyyy" }}</td>
+      <td>{{ pedido.dataPagamento | date: "dd/MM/yyyy" }}</td>
+      <td>{{ pedido.valorPago | currency: "USD" }}</td>
+      <td>{{ pedido.troco | currency: "USD" }}</td>
+      <td>{{ pedido.valor | currency: "USD" }}</td>
+      <td>
+        <button>Add Produto</button>
+        <button>Pagar</button>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -10,6 +10,7 @@ import { ClienteModule } from './cliente/cliente.module';
 import { FarmaceuticoModule } from './farmaceutico/farmaceutico.module';
 import { FornecedorModule } from './fornecedor/fornecedor.module';
 import { ProdutoModule } from './produto/produto.module';
+import { PedidoModule } from './pedido/pedido.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { ProdutoModule } from './produto/produto.module';
     FarmaceuticoModule,
     FornecedorModule,
     ProdutoModule,
+    PedidoModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
