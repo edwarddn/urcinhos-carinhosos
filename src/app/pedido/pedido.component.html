@@ -40,9 +40,28 @@
       <td>{{ pedido.troco | currency: "USD" }}</td>
       <td>{{ pedido.valor | currency: "USD" }}</td>
       <td>
-        <button>Add Produto</button>
-        <button>Pagar</button>
+        <button *ngIf="pedido.status === 'PENDENTE'" (click)="verModal(pedido)">
+          Add Produto
+        </button>
+        <button *ngIf="pedido.status === 'PENDENTE'">Pagar</button>
+        <button>detalhes</button>
       </td>
     </tr>
   </table>
+
+  <form
+    *ngIf="formAddProduto.controls['idPedido'].value"
+    class="form-box modal"
+    [formGroup]="formAddProduto"
+    (ngSubmit)="addProduto()"
+  >
+    <p>Adicionar itens ao pedido</p>
+    <select formControlName="idProduto">
+      <option value="">Selecione um Produto</option>
+      <option *ngFor="let item of produtos" value="{{ item.id }}">
+        {{ item.nome }}
+      </option>
+    </select>
+    <button type="submit" [disabled]="!formAddProduto.valid">Adicionar</button>
+  </form>
 </div>

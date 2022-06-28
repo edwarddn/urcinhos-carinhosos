@@ -24,7 +24,7 @@ export class PedidoService {
 
   adicionarProdutos(id: string, idProduto: string): Observable<Pedido> {
     return this.http.put<Pedido>(this.url + 'adicionar-produtos/' + id, {
-      idProdutos: [...idProduto],
+      idProdutos: [idProduto],
     });
   }
 
