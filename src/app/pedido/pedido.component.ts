@@ -52,19 +52,19 @@ export class PedidoComponent implements OnInit {
 
   private consultarFarmaceuticos(): void {
     this.farmaceuticoService.consultar().subscribe((x) => {
-      this.farmaceuticos = x;
+      //this.farmaceuticos = x;
     });
   }
 
   private consultarClientes(): void {
     this.clienteService.consultar().subscribe((x) => {
-      this.clientes = x;
+      //this.clientes = x;
     });
   }
 
   private consultarPedidos(): void {
     this.pedidoService.consultar().subscribe((x) => {
-      this.pedidos = x;
+      //this.pedidos = x;
     });
   }
 
