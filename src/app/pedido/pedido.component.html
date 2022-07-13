@@ -31,8 +31,8 @@
       <th>Ações</th>
     </tr>
     <tr *ngFor="let pedido of pedidos">
-      <td>{{ pedido.cliente.nome }}</td>
-      <td>{{ pedido.farmaceutico.nome }}</td>
+      <td>{{ pedido.nomeCliente }}</td>
+      <td>{{ pedido.nomeFarmaceutico }}</td>
       <td>{{ pedido.status }}</td>
       <td>{{ pedido.dataEmissao | date: "dd/MM/yyyy" }}</td>
       <td>{{ pedido.dataPagamento | date: "dd/MM/yyyy" }}</td>

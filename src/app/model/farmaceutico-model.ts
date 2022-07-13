@@ -1,4 +1,4 @@
-export interface ClienteModel {
+export interface FarmaceuticoModel {
   id: string;
   nome: string;
   aniver: string;

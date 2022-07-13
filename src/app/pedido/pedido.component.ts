@@ -1,4 +1,3 @@
-import { Farmaceutico } from './../domain/farmaceutico';
 import { FarmaceuticoService } from './../service/farmaceutico.service';
 import { ClienteService } from './../service/cliente.service';
 import { Component, OnInit } from '@angular/core';
@@ -8,11 +7,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Pedido } from '../domain/pedido';
 import { PedidoService } from '../service/pedido.service';
-import { Cliente } from '../domain/cliente';
-import { Produto } from '../domain/produto';
 import { ProdutoService } from '../service/produto.service';
+import {PedidoModel} from "../model/pedido-model";
+import {ProdutoModel} from "../model/produto-model";
+import {ClienteModel} from "../model/cliente-model";
+import {FarmaceuticoModel} from "../model/farmaceutico-model";
 
 @Component({
   selector: 'app-pedido',
@@ -20,10 +20,10 @@ import { ProdutoService } from '../service/produto.service';
   styleUrls: ['./pedido.component.scss'],
 })
 export class PedidoComponent implements OnInit {
-  pedidos: Pedido[] = [];
-  farmaceuticos: Farmaceutico[] = [];
-  clientes: Cliente[] = [];
-  produtos: Produto[] = [];
+  pedidos: PedidoModel[] = [];
+  farmaceuticos: FarmaceuticoModel[] = [];
+  clientes: ClienteModel[] = [];
+  produtos: ProdutoModel[] = [];
 
   form: FormGroup = this.formBuilder.group({
     idFarmaceutico: new FormControl('', [Validators.required]),
@@ -52,19 +52,19 @@ export class PedidoComponent implements OnInit {
 
   private consultarFarmaceuticos(): void {
     this.farmaceuticoService.consultar().subscribe((x) => {
-      //this.farmaceuticos = x;
+      this.farmaceuticos = x;
     });
   }
 
   private consultarClientes(): void {
     this.clienteService.consultar().subscribe((x) => {
-      //this.clientes = x;
+      this.clientes = x;
     });
   }
 
   private consultarPedidos(): void {
     this.pedidoService.consultar().subscribe((x) => {
-      //this.pedidos = x;
+      this.pedidos = x;
     });
   }
 
@@ -85,7 +85,7 @@ export class PedidoComponent implements OnInit {
     }
   }
 
-  verModal(pedido: Pedido): void {
+  verModal(pedido: PedidoModel): void {
     this.formAddProduto.controls['idPedido'].setValue(pedido.id);
   }
 
@@ -108,6 +108,6 @@ export class PedidoComponent implements OnInit {
     this.form.controls['idCliente'].setValue('');
 
     this.formAddProduto.reset();
-    this.form.controls['idProduto'].setValue('');
+    this.formAddProduto.controls['idProduto'].setValue('');
   }
 }

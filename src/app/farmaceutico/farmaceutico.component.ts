@@ -1,6 +1,7 @@
 import { FarmaceuticoService } from './../service/farmaceutico.service';
 import { Component, OnInit } from '@angular/core';
 import { Farmaceutico } from '../domain/farmaceutico';
+import {FarmaceuticoModel} from "../model/farmaceutico-model";
 
 @Component({
   selector: 'app-farmaceutico',
@@ -8,7 +9,7 @@ import { Farmaceutico } from '../domain/farmaceutico';
   styleUrls: ['./farmaceutico.component.scss'],
 })
 export class FarmaceuticoComponent implements OnInit {
-  lista: Farmaceutico[] = [];
+  lista: FarmaceuticoModel[] = [];
 
   constructor(private farmaceuticoService: FarmaceuticoService) {}
 
@@ -22,14 +23,14 @@ export class FarmaceuticoComponent implements OnInit {
     });
   }
 
-  excluir(f: Farmaceutico): void {
+  excluir(f: FarmaceuticoModel): void {
     this.farmaceuticoService.remover(f.id).subscribe(() => {
       this.consultar();
     });
   }
 
   consultar(): void {
-    this.farmaceuticoService.consultar().subscribe((list: Farmaceutico[]) => {
+    this.farmaceuticoService.consultar().subscribe((list: FarmaceuticoModel[]) => {
       this.lista = list;
     });
   }

@@ -10,23 +10,23 @@ import { Observable } from 'rxjs';
 export class ProdutoService {
   constructor(private http: HttpClient) {}
 
-  cadastrar(model: ProdutoModel): Observable<Produto> {
+  cadastrar(model: ProdutoModel): Observable<ProdutoModel> {
     const url = 'http://localhost:8080/produto/cadastrar';
     return this.http.post<Produto>(url, model);
   }
 
-  alterar(id: string, model: ProdutoModel): Observable<Produto> {
-    const url = 'http://localhost:8080/produto/alterar/' + id;
-    return this.http.put<Produto>(url, model);
+  alterar(id: string, model: ProdutoModel): Observable<ProdutoModel> {
+    const url = 'http://localhost:8080/produto/alterar';
+    return this.http.put<ProdutoModel>(url, model);
   }
 
-  remover(id: string): Observable<Produto> {
+  remover(id: string): Observable<ProdutoModel> {
     const url = 'http://localhost:8080/produto/remover/' + id;
-    return this.http.delete<Produto>(url);
+    return this.http.delete<ProdutoModel>(url);
   }
 
-  consultar(): Observable<Produto[]> {
+  consultar(): Observable<ProdutoModel[]> {
     const url = 'http://localhost:8080/produto/consultar';
-    return this.http.get<Produto[]>(url);
+    return this.http.get<ProdutoModel[]>(url);
   }
 }

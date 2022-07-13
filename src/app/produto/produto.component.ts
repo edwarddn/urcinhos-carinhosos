@@ -5,9 +5,6 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
-
-import { Produto } from '../domain/produto';
 import { ProdutoModel } from '../model/produto-model';
 import { ProdutoService } from '../service/produto.service';
 
@@ -17,7 +14,7 @@ import { ProdutoService } from '../service/produto.service';
   styleUrls: ['./produto.component.scss'],
 })
 export class ProdutoComponent implements OnInit {
-  list: Produto[] = [];
+  list: ProdutoModel[] = [];
 
   form: FormGroup = this.formBuilder.group({
     id: new FormControl(null),
@@ -35,7 +32,7 @@ export class ProdutoComponent implements OnInit {
   }
 
   private carregarTabela() {
-    this.produtoService.consultar().subscribe((domains: Produto[]) => {
+    this.produtoService.consultar().subscribe((domains: ProdutoModel[]) => {
       if (domains) {
         this.list = domains;
       }
@@ -46,14 +43,14 @@ export class ProdutoComponent implements OnInit {
     const id = this.form.controls['id'].value;
     const produto: ProdutoModel = this.form.getRawValue();
     if (id) {
-      this.produtoService.alterar(id, produto).subscribe((domain: Produto) => {
+      this.produtoService.alterar(id, produto).subscribe((domain: ProdutoModel) => {
         if (domain.id) {
           this.carregarTabela();
           this.form.reset();
         }
       });
     } else {
-      this.produtoService.cadastrar(produto).subscribe((domain: Produto) => {
+      this.produtoService.cadastrar(produto).subscribe((domain: ProdutoModel) => {
         if (domain.id) {
           this.list.push(domain);
           this.form.reset();
@@ -62,14 +59,14 @@ export class ProdutoComponent implements OnInit {
     }
   }
 
-  editar(produto: Produto): void {
+  editar(produto: ProdutoModel): void {
     this.form.controls['id'].setValue(produto.id);
     this.form.controls['nome'].setValue(produto.nome);
     this.form.controls['valor'].setValue(produto.valor);
   }
 
-  apagar(produto: Produto): void {
-    this.produtoService.remover(produto.id).subscribe((domain: Produto) => {
+  apagar(produto: ProdutoModel): void {
+    this.produtoService.remover(produto.id).subscribe((domain: ProdutoModel) => {
       if (domain.id) {
         this.carregarTabela();
         this.form.reset();
